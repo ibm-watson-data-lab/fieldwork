@@ -1,0 +1,225 @@
+//-- initialize map
+// var map = L.map('map').setView([44.5499, -123.254], 16);
+var map = L.map('map').setView([42.35, -71.05], 16); // Boston
+// var map = L.map('map').setView([41.8052853,-71.4055789], 16); // Providence
+
+L.tileLayer('//{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+	maxZoom: 20,
+	detectRetina: true,
+	id: 'examples.map-20v6611k'
+}).addTo(map);
+
+L.control.scale().addTo(map);
+
+//-- initialize databases
+var remotedbs = new Array(config.geodata.length);
+var editdb = null;
+var remoteeditdb = new PouchDB('https://'+config.editlayer.key+':'+config.editlayer.password+'@rajsingh.cloudant.com/' + config.editlayer.name);
+var maplayers = new Array(config.geodata.length+1);
+
+var annoMarker = L.Icon.extend({
+    options: {
+        shadowUrl: null,
+        iconAnchor: new L.Point(12, 12),
+        iconSize: new L.Point(30, 44),
+        iconUrl: './css/images/pushpin.png'
+    }
+});
+
+//-- database init
+// for (var i = 0; i < config.geodata.length; i++) {
+// 	remotedbs[i] = new PouchDB(config.geodata[i].name);
+// 	remotedbs[i].destroy().then(function () {
+// 		remotedbs[i] = new PouchDB(config.geodata[i].name);
+// 	});
+// }
+
+//-- map layers setup
+var st = {radius: 12, fillColor: '#6157B9', fillOpacity: 0.2, color: '#6157B9'};
+for (var i = 0; i < config.geodata.length; i++) {
+	var dataset = config.geodata[i];
+	if (dataset.type === 'Point') {
+		maplayers[i] = L.geoJson(null, {
+			onEachFeature: onEachFeature, 
+			pointToLayer: function(feature, latlng) { return L.circleMarker(latlng, dataset.style)}
+			// pointToLayer: function(feature, latlng) { return L.circleMarker(latlng, st)}
+		});//.addTo(map);
+	} else {
+		maplayers[i] = L.geoJson(null, {
+			onEachFeature: onEachFeature, 
+			style: config.geodata[i].style
+		});//.addTo(map);
+	}
+}
+
+//-- layer control setup
+var overlayMaps = {};
+for (var i = 0; i < config.geodata.length; i++) {
+	overlayMaps[config.geodata[i].name] = maplayers[i];
+}
+L.control.layers(null, overlayMaps, {autoZIndex:true}).addTo(map);
+
+// editable layer
+var editlayer = L.geoJson(null, {
+	onEachFeature: onEachEditFeature, 
+	pointToLayer: function(feature, latlng) { return L.marker(latlng, {icon: new annoMarker()} ) }
+}).addTo(map);
+
+function onEachFeature(feature, layer) {
+    if (feature.properties) {
+		var pop = '';
+		for (var k in feature.properties) {
+			pop += '<b>' + k + ': </b> ' + feature.properties[k] + '<br/>';
+		}
+		layer.bindPopup(pop);
+    }
+}
+
+function onEachEditFeature(feature, layer) {
+	onEachFeature(feature, layer);
+}
+
+function updateProperties(formelement) {
+	alert('here with '+formelement);
+}
+
+////---- Code around editing the layer
+var drawControl = null;
+function editFeatures() {
+	if ( drawControl != null ) return;
+	
+	drawControl = new L.Control.Draw({
+	    edit: {
+	        featureGroup: editlayer
+	    },
+		draw: {
+			marker: {
+				icon: new annoMarker()
+			},
+			polygon: false, 
+			polyline: false, 
+			circle: false, 
+			rectangle: false
+		}
+	});
+	map.addControl(drawControl);	
+}
+
+////---- sync pipe and annotation edits to host
+function syncFeatures() {
+	PouchDB.sync(editdb, remoteeditdb);
+}
+
+/**
+ * Take action when user is done creating a new layer (feature)
+ * Create a feature object and set geometry, geometry bbox, and properties, and update pouch
+ */
+map.on('draw:created', function (e) {
+	// pop up a window to add an annotation comment
+	var anno = "none";
+	bootbox.prompt("Comment:", function(result) {
+		if (result != null) {
+			anno = result;
+		}
+		// make a new GeoJSON feature using this layer
+		var newfeature = L.layerGroup([e.layer]).toGeoJSON().features[0];
+		newfeature.properties.annotation = anno;
+	
+		// compute bbox
+		var newbbox = null;
+		if ( e.layerType == "marker") {
+			newbbox = L.latLngBounds(e.layer._latlng, e.layer._latlng);
+		} else {
+			newbbox = L.latLngBounds(e.layer._latlngs);
+		}
+		newfeature.geometry.bbox = 
+			[newbbox.getWest(),newbbox.getSouth(),newbbox.getEast(),newbbox.getNorth()];
+		// insert into pouch
+		editdb.post(newfeature, function(err, response) {
+			if (err) console.log("Error adding new feature. Error: %s", err.toString());
+			else {
+				// e.layer.feature = newfeature;
+				// e.layer.feature._id = response.id;
+				// e.layer.feature._rev = response.rev;
+				// editlayer.addLayer(e.layer);
+				newfeature._id = response.id;
+				newfeature._rev = response.rev;
+				editlayer.addData(newfeature);
+				notifier.show("Added new feature.");
+				console.log("Added new feature. Response: %s", JSON.stringify(response));
+			}
+		});
+	});
+});
+
+/**
+ * Take action when user is done editing a layer (feature)
+ * Set the layer's feature coordinates to new latlngs, update the bbox, and update pouch
+ */
+map.on('draw:edited', function (e) {
+	e.layers.eachLayer(function(layer) {
+		var newfeature = L.layerGroup([layer]).toGeoJSON();
+		layer.feature.geometry.coordinates = newfeature.features[0].geometry.coordinates;
+		// compute bbox
+		var newbbox = null;
+		if ( layer._latlngs) {
+			newbbox = L.latLngBounds(layer._latlngs);
+		} else {
+			newbbox = L.latLngBounds(layer._latlng, layer._latlng);
+		}
+		layer.feature.geometry.bbox = 
+			[newbbox.getWest(),newbbox.getSouth(),newbbox.getEast(),newbbox.getNorth()];
+		// put new version of doc into pouch
+		editdb.put( layer.feature, function(err, response) {
+			if (err) {
+				console.log("Error editing: %s. Error: %s", layer.feature._id, err.toString());
+			} else {
+				notifier.show("Edit successfully saved.");
+				console.log("Edited: %s. Response: %s", layer.feature._id, response.toString());
+			}
+		});
+	});
+});
+
+/**
+ * Take action when user is done deleting a layer (feature)
+ * Set the layer's feature _deleted property to true and update pouch
+ */
+map.on('draw:deleted', function (e) {
+    e.layers.eachLayer(function (layer) {
+		layer.feature._deleted = true;
+		editdb.remove( layer.feature, function(err, response) {
+			if (err) console.log("Error removing: %s. Error: %s", layer.feature._id, err.toString());
+			else {
+				notifier.show("Removed: " + layer.feature._id);
+				console.log("Removed: %s. Response: %s", layer.feature._id, response.toString());
+			}
+		});
+    });
+});
+
+$(function() {
+	notifier.init({
+		"selector": ".bb-alert"
+	});
+});
+var notifier = (function() {
+    "use strict";
+
+    var elem,
+        hideHandler,
+        that = {};
+
+    that.init = function(options) {
+        elem = $(options.selector);
+    };
+
+    that.show = function(text) {
+        clearTimeout(hideHandler);
+
+        elem.find("span").html(text);
+        elem.delay(200).fadeIn().delay(4000).fadeOut();
+    };
+
+    return that;
+}());
