@@ -1,33 +1,34 @@
-## Generated CouchApp
+# Cloudant Field Work
 
-This is meant to be an example CouchApp and to ship with most of the CouchApp goodies.
+The Cloudant Field Work is a demo web application that allows for offline field editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an [IBM Cloudant](https://cloudant.com/) database.
 
-Clone with git:
+## Installing
 
-    git clone git://github.com/couchapp/example.git
-    cd example
+Get the project:
 
-Install with 
-    
-    couchapp push . http://localhost:5984/example
+    $ git clone https://github.com/rajrsingh/fieldwork.git
+    $ cd fieldwork
 
-or (if you have security turned on)
+## Deploying
 
-    couchapp push . http://adminname:adminpass@localhost:5984/example
-  
-You can also create this app by running
+Complete these steps first if you have not already:
 
-    couchapp generate example && cd example
-    couchapp push . http://localhost:5984/example
+1. [Install couchapp](https://github.com/couchapp/couchapp)
+1. Copy the app to your Cloudant account
 
-Deprecated: *couchapp generate proto && cd proto*
+        $ couchapp push . http://$username.cloudant.com/fieldwork
 
 
-## Todo
+1. Or (if you have security turned on)
 
-* factor CouchApp Commonjs to jquery.couch.require.js
-* use $.couch.app in app.js
+        $ couchapp push . http://$username:$pw@$username.cloudant.com/fieldwork
+
+## Running
+
+Run the app on the web at https://$username.cloudant.com/fieldwork/_design/fieldwork/index.html
 
 ## License
 
-Apache 2.0
+Licensed under the [Apache License, Version 2.0](LICENSE.txt).
+
+
