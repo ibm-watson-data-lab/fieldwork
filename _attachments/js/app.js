@@ -3,11 +3,13 @@
 var map = L.map('map').setView([42.35, -71.05], 16); // Boston
 // var map = L.map('map').setView([41.8052853,-71.4055789], 16); // Providence
 
-L.tileLayer('//{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-	maxZoom: 20,
-	detectRetina: true,
-	id: 'examples.map-20v6611k'
-}).addTo(map);
+// L.tileLayer('//{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+//   maxZoom: 20,
+//   detectRetina: true,
+//   id: 'examples.map-20v6611k'
+// }).addTo(map);
+L.mapbox.accessToken = 'pk.eyJ1IjoicmFqcnNpbmdoIiwiYSI6ImpzeDhXbk0ifQ.VeSXCxcobmgfLgJAnsK3nw';
+L.mapbox.tileLayer('mapbox.pencil').addTo(map);
 
 L.control.scale().addTo(map);
 
@@ -136,7 +138,7 @@ map.on('draw:created', function (e) {
 			[newbbox.getWest(),newbbox.getSouth(),newbbox.getEast(),newbbox.getNorth()];
 		// insert into pouch
 		editdb.post(newfeature, function(err, response) {
-			if (err) console.log("Error adding new feature. Error: %s", err.toString());
+			if (err) showMessage("Error adding new feature. Error: "+err.toString());
 			else {
 				// e.layer.feature = newfeature;
 				// e.layer.feature._id = response.id;
@@ -145,8 +147,8 @@ map.on('draw:created', function (e) {
 				newfeature._id = response.id;
 				newfeature._rev = response.rev;
 				editlayer.addData(newfeature);
-				notifier.show("Added new feature.");
-				console.log("Added new feature. Response: %s", JSON.stringify(response));
+        // notifier.show("Added new feature.");
+        showMessage("\nAdded new feature. Response: " + JSON.stringify(response));
 			}
 		});
 	});
@@ -172,10 +174,9 @@ map.on('draw:edited', function (e) {
 		// put new version of doc into pouch
 		editdb.put( layer.feature, function(err, response) {
 			if (err) {
-				console.log("Error editing: %s. Error: %s", layer.feature._id, err.toString());
+				showMessage("Error editing: "+layer.feature._id+". Error: " + err.toString());
 			} else {
-				notifier.show("Edit successfully saved.");
-				console.log("Edited: %s. Response: %s", layer.feature._id, response.toString());
+				showMessage("Edited: "+layer.feature._id+". Response: " + response.toString());
 			}
 		});
 	});
@@ -189,10 +190,9 @@ map.on('draw:deleted', function (e) {
     e.layers.eachLayer(function (layer) {
 		layer.feature._deleted = true;
 		editdb.remove( layer.feature, function(err, response) {
-			if (err) console.log("Error removing: %s. Error: %s", layer.feature._id, err.toString());
+			if (err) showMessage("Error removing: "+layer.feature._id+". Error: "+err.toString());
 			else {
-				notifier.show("Removed: " + layer.feature._id);
-				console.log("Removed: %s. Response: %s", layer.feature._id, response.toString());
+				showMessage("Removed: "+layer.feature._id+". Response: "+response.toString());
 			}
 		});
     });
@@ -223,3 +223,7 @@ var notifier = (function() {
 
     return that;
 }());
+
+function showMessage(msg) {
+  $('#messages').val(msg);
+}

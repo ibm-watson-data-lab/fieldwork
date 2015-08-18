@@ -1,8 +1,5 @@
 var config = {
 	geodata: [
-		// { name: 'poinames', account: 'rajsingh.cloudant.com',
-		// 	geopath: '_design/geodd/_geo/geoidx', type: 'Point',
-		// 	style: {radius: 12, fillColor: '#6157B9', fillOpacity: 0.2, color: '#6157B9'} },
 		{ name: 'hydro100k_arc', account: 'opendata.cloudant.com', 
 			geopath: '_design/SpatialView/_geo/spatial', type: 'LineString', 
 			style: {width: 4, fillOpacity: 0.6, color: '#12109B'} },
@@ -15,6 +12,9 @@ var config = {
 		{ name: 'mbtabusroutes', account: 'opendata.cloudant.com', 
 			geopath: '_design/SpatialView/_geo/spatial', type: 'LineString', 
 			style: {width: 2, fillOpacity: 0.9, color: '#C42323'} }
+		// { name: 'poinames', account: 'rajsingh.cloudant.com',
+		// 	geopath: '_design/geodd/_geo/geoidx', type: 'Point',
+    // 	style: {radius: 12, fillColor: '#6157B9', fillOpacity: 0.2, color: '#6157B9'} }
 	],
 	editlayer: {
 		name: 'fieldedits', 

@@ -1,6 +1,6 @@
 /** Add PouchDB docs to Leaflet map */
 function updateMapLayer(pdb, maplayer) {
-	console.log('Adding a map layer');
+	showMessage('Adding a map layer');
 	pdb.allDocs( {include_docs: true} ).then(function (result) {
 		maplayer.clearLayers();
 		for (var i = 0; i < result.rows.length; i++) {
@@ -8,12 +8,13 @@ function updateMapLayer(pdb, maplayer) {
 				maplayer.addData(result.rows[i].doc);
 		}
 	}).catch(function (err) {
-		console.log('Error loading data from pouchdb to map: '+err);
+		showMessage('Error loading data from pouchdb to map: '+err);
 	});
 }
 
 function loadFromCloudantQuery(queryobj, pdb, maplayer) {
-	console.log("REQUESTING: "+queryobj.url);
+  $('#messages').val("\nREQUESTING: "+queryobj.url);
+  
 	$.ajax(queryobj)
 	.done(function (data) {
 		data = JSON.parse(data);
@@ -22,7 +23,7 @@ function loadFromCloudantQuery(queryobj, pdb, maplayer) {
 				var gs = new Array();
 				for (var i = 0; i < data.rows.length; i++) gs.push(data.rows[i].doc);
 				// save features into pouchdb
-				pdb.bulkDocs(gs, {new_edits:false}).then(function (result) {
+				pdb.bulkDocs(gs).then(function (result) {
 					// console.log('Pouch load result: '+JSON.stringify(result));
 					if (data.bookmark) {
 						if ( queryobj.url.indexOf('bookmark=') > 0 ) 
@@ -41,7 +42,7 @@ function loadFromCloudantQuery(queryobj, pdb, maplayer) {
 		}
 	})
 	.fail(function(jqxhr, textStatus, error) {
-		console.log('query failed: '+error.toString());//+'Trying to load map layer from PouchDB cache...');
+		showMessage('query failed: '+error.toString());//+'Trying to load map layer from PouchDB cache...');
 		// updateMapLayer(pdb, maplayer);
 	});	
 }
@@ -56,7 +57,8 @@ function loadLayer(idx, bbox) {
 
 function loadEditableLayer(bbox) {
 	editdb = new PouchDB(config.editlayer.name);
-	editdb.replicate.to(remoteeditdb, {live:true,retry:true})
+  // editdb.replicate.to(remoteeditdb, {live:true,retry:true})
+  var sync = PouchDB.sync(editdb, remoteeditdb, {live:true,retry:true})
 	.on('error', function (err) {
 		console.log('Replication error: '+err);
 		alert('Replication error: '+err);
@@ -64,8 +66,12 @@ function loadEditableLayer(bbox) {
 		notifier.show("Active Replication...");
 		console.log("Active Replication...");
 	}).on('paused', function (err) {
-		notifier.show("Replication paused: "+err);
-		console.log("Replication paused: "+err);
+    err = (err==undefined) ? '' : ': '+err;
+    // notifier.show("Replication paused"+err);
+		console.log("Replication paused"+err);
+	}).on('complete', function (info) {
+      notifer.show('Replication complete: '+info);
+      console.log('Replication complete: '+info);;
 	});
 	var queryobj = buildQueryObject(config.editlayer, bbox);
 	loadFromCloudantQuery(queryobj, editdb, editlayer);

@@ -21,7 +21,7 @@ Complete these steps first if you have not already:
 
 1. Or (if you have security turned on)
 
-        $ couchapp push . http://$username:$pw@$username.cloudant.com/fieldwork
+        $ couchapp push . http://$username:$password@$username.cloudant.com/fieldwork
 
 ## Running
 
