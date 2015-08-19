@@ -138,7 +138,7 @@ map.on('draw:created', function (e) {
 			[newbbox.getWest(),newbbox.getSouth(),newbbox.getEast(),newbbox.getNorth()];
 		// insert into pouch
 		editdb.post(newfeature, function(err, response) {
-			if (err) showMessage("Error adding new feature. Error: "+err.toString());
+			if (err) sendMessage("Error adding new feature. Error: "+err.toString());
 			else {
 				// e.layer.feature = newfeature;
 				// e.layer.feature._id = response.id;
@@ -148,7 +148,7 @@ map.on('draw:created', function (e) {
 				newfeature._rev = response.rev;
 				editlayer.addData(newfeature);
         // notifier.show("Added new feature.");
-        showMessage("\nAdded new feature. Response: " + JSON.stringify(response));
+        sendMessage("\nAdded new feature. Response: " + JSON.stringify(response));
 			}
 		});
 	});
@@ -174,9 +174,9 @@ map.on('draw:edited', function (e) {
 		// put new version of doc into pouch
 		editdb.put( layer.feature, function(err, response) {
 			if (err) {
-				showMessage("Error editing: "+layer.feature._id+". Error: " + err.toString());
+				sendMessage("Error editing: "+layer.feature._id+". Error: " + err.toString());
 			} else {
-				showMessage("Edited: "+layer.feature._id+". Response: " + response.toString());
+				sendMessage("Edited: "+layer.feature._id+". Response: " + response.toString());
 			}
 		});
 	});
@@ -190,9 +190,9 @@ map.on('draw:deleted', function (e) {
     e.layers.eachLayer(function (layer) {
 		layer.feature._deleted = true;
 		editdb.remove( layer.feature, function(err, response) {
-			if (err) showMessage("Error removing: "+layer.feature._id+". Error: "+err.toString());
+			if (err) sendMessage("Error removing: "+layer.feature._id+". Error: "+err.toString());
 			else {
-				showMessage("Removed: "+layer.feature._id+". Response: "+response.toString());
+				sendMessage("Removed: "+layer.feature._id+". Response: "+response.toString());
 			}
 		});
     });
@@ -224,6 +224,14 @@ var notifier = (function() {
     return that;
 }());
 
-function showMessage(msg) {
-  $('#messages').val(msg);
+function sendMessage(strarray) {
+  if (typeof strarray === 'string') strarray = [strarray];
+  var m = $('#messages');
+  m.html(m.html() + '<hr>');
+  for (var i = 0; i < strarray.length; i++) {
+    var str = strarray[i];
+    if (typeof str == 'object' ) str = JSON.stringify(str);
+    m.html( m.html() + str + '<br/>' );
+  }
+  m.scrollTop(m[0].scrollHeight);
 }

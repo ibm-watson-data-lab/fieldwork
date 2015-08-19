@@ -20,7 +20,7 @@
       <div class="col-sm-12">
         <form class="form" onsubmit="return false">
           <div class="form-group">
-            <label for="searchterm">Database https://itselezvorgatterstiongen:lQyjxkwFB2HN60oNce21VaRF@rajsingh.cloudant.com/fieldedits</label>
+            <label for="searchterm">Database</label>
             <input type="text" class="form-control" id="q" placeholder="https://$username:$pw@$username.cloudant.com/$databasename">
           </div>
           <button class="btn btn-primary" onclick="listen()">Listen</button>
@@ -47,6 +47,7 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="js/pouchdb-4.0.0.min.js"></script>
     <script>
+    // https://itselezvorgatterstiongen:lQyjxkwFB2HN60oNce21VaRF@rajsingh.cloudant.com/fieldedits
     var changedb;
     var localdb = new PouchDB('changetest');
     localdb.info().then(function (info) {
@@ -60,25 +61,30 @@
       
       var sync = localdb.sync(changedb, {live:true,retry:true})
     	.on('change', function (info) {
-    		sendMessage(info);
+        sendMessage(['CHANGE', info]);
     	}).on('paused', function () {
     		sendMessage("Replication paused");
     	}).on('active', function () {
     		sendMessage("Active Replication...");
     	}).on('complete', function (info) {
-          sendMessage(info);
+        sendMessage(['COMPLETE', info]);
       }).on('denied', function (info) {
-        sendMessage(info);
+        sendMessage(['DENIED', info]);
     	}).on('error', function (err) {
-    		sendMessage(err);
+        sendMessage(['ERROR', err]);
     	});
     }
     
-    function sendMessage(str) {
-      if (typeof str == 'object' ) str = JSON.stringify(str);
+    function sendMessage(strarray) {
+      if (typeof strarray === 'string') strarray = [strarray];
       var m = $('#messages');
-      m.html( m.html() + '<hr>' + str + '<br/>' );
-      m.scrollTop = m.scrollHeight+1000;
+      m.html(m.html() + '<hr>');
+      for (var i = 0; i < strarray.length; i++) {
+        var str = strarray[i];
+        if (typeof str == 'object' ) str = JSON.stringify(str);
+        m.html( m.html() + str + '<br/>' );
+      }
+      m.scrollTop(m[0].scrollHeight);
     }
     </script>
 	</body>

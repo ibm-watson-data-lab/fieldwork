@@ -1,6 +1,5 @@
 /** Add PouchDB docs to Leaflet map */
 function updateMapLayer(pdb, maplayer) {
-	showMessage('Adding a map layer');
 	pdb.allDocs( {include_docs: true} ).then(function (result) {
 		maplayer.clearLayers();
 		for (var i = 0; i < result.rows.length; i++) {
@@ -8,7 +7,7 @@ function updateMapLayer(pdb, maplayer) {
 				maplayer.addData(result.rows[i].doc);
 		}
 	}).catch(function (err) {
-		showMessage('Error loading data from pouchdb to map: '+err);
+		sendMessage('Error loading data from pouchdb to map: '+err);
 	});
 }
 
@@ -42,7 +41,7 @@ function loadFromCloudantQuery(queryobj, pdb, maplayer) {
 		}
 	})
 	.fail(function(jqxhr, textStatus, error) {
-		showMessage('query failed: '+error.toString());//+'Trying to load map layer from PouchDB cache...');
+		sendMessage('query failed: '+error.toString());//+'Trying to load map layer from PouchDB cache...');
 		// updateMapLayer(pdb, maplayer);
 	});	
 }
@@ -57,24 +56,25 @@ function loadLayer(idx, bbox) {
 
 function loadEditableLayer(bbox) {
 	editdb = new PouchDB(config.editlayer.name);
-  // editdb.replicate.to(remoteeditdb, {live:true,retry:true})
-  var sync = PouchDB.sync(editdb, remoteeditdb, {live:true,retry:true})
-	.on('error', function (err) {
-		console.log('Replication error: '+err);
-		alert('Replication error: '+err);
+  var sync = editdb.sync(remoteeditdb, {live:true,retry:true})
+	.on('change', function (info) {
+    sendMessage(['CHANGE', info]);
+    if ( info.direction == 'pull') {
+      updateMapLayer(editdb, editlayer);
+    }
+	}).on('paused', function () {
+		sendMessage("Replication paused");
 	}).on('active', function () {
-		notifier.show("Active Replication...");
-		console.log("Active Replication...");
-	}).on('paused', function (err) {
-    err = (err==undefined) ? '' : ': '+err;
-    // notifier.show("Replication paused"+err);
-		console.log("Replication paused"+err);
+		sendMessage("Active Replication...");
 	}).on('complete', function (info) {
-      notifer.show('Replication complete: '+info);
-      console.log('Replication complete: '+info);;
+    sendMessage(['COMPLETE', info]);
+  }).on('denied', function (info) {
+    sendMessage(['DENIED', info]);
+	}).on('error', function (err) {
+    sendMessage(['ERROR', err]);
 	});
-	var queryobj = buildQueryObject(config.editlayer, bbox);
-	loadFromCloudantQuery(queryobj, editdb, editlayer);
+  // var queryobj = buildQueryObject(config.editlayer, bbox);
+  // loadFromCloudantQuery(queryobj, editdb, editlayer);
 }
 
 // get all data layers from Cloudant
