@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Field Data Editing Demo</title>
+    <link href="//cloudant.com/wp-content/themes/cloudant/images/favicon.ico" rel='shortcut icon' type='image/vnd.microsoft.icon' />
+    <link href="//cloudant.com/wp-content/themes/cloudant/images/favicon.png" rel='icon' type='image/png' />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' />
+    <link rel="stylesheet" href="css/leaflet.draw.css" type="text/css">
+	</head>
+	<body>
+		<div class="container-fluid appwindow">
+			<div id="banner">
+					<h3><img src="css/images/cloudant_ibm.png" height="48px">
+					Field Work<!-- :: field editing demonstration -->
+					<div id="controls" style="float:right">
+ 						<button id="loadbutton" class="btn btn-success"
+							onclick="loadData()">Load</button>
+						<button id="editbutton" class="btn btn-success"
+							onclick="editFeatures()" disabled>Edit</button>
+					</div></h3>
+			</div><!-- end banner-->
+			<div id="map"></div>
+		</div>
+    <p> </p>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+            <h3 class="panel-title">Message Activity</h3>
+          </div>
+          <div class="panel-body" id="messages" style="height:128px;overflow:scroll;background-color:#666"></div>
+        </div>      
+      </div><!-- end column -->
+    </div><!-- end row -->
+		<div class="bb-alert alert alert-info" style="display:none;">
+			<span>The examples populate this alert with dummy content</span>
+		</div>
+					<!-- <div id="admincontrols">
+						<button id="syncbutton" class="btn btn-warning"
+							onclick="syncFeatures()">Sync</button>
+						<button id="resetbutton" class="btn btn-warning"
+							onclick="resetdbs()">Reset Data</button>
+					</div> -->
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootbox.min.js"></script>
+		<script src="js/pouchdb-4.0.0.min.js"></script>
+    <script src='//api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+		<script src="js/leaflet.draw.js" type="text/javascript"></script>
+		<script src="js/config.js" type="text/javascript"></script>
+		<script src="js/app.js" type="text/javascript"></script>
+		<script src="js/layers.js" type="text/javascript"></script>
+	</body>
+</html>
