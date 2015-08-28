@@ -55,11 +55,13 @@ for (var i = 0; i < config.geodata.length; i++) {
 }
 
 //-- layer control setup
-var overlayMaps = {};
-for (var i = 0; i < config.geodata.length; i++) {
-	overlayMaps[config.geodata[i].name] = maplayers[i];
+function addOverlaysControl() {
+  var overlayMaps = {};
+  for (var i = 0; i < config.geodata.length; i++) {
+  	overlayMaps[config.geodata[i].name] = maplayers[i];
+  }
+  L.control.layers(null, overlayMaps, {collapsed:false,autoZIndex:true}).addTo(map);
 }
-L.control.layers(null, overlayMaps, {autoZIndex:true}).addTo(map);
 
 // editable layer
 var editlayer = L.geoJson(null, {

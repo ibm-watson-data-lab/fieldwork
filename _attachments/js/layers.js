@@ -61,6 +61,7 @@ function loadEditableLayer(bbox) {
     sendMessage(['CHANGE', info]);
     if ( info.direction == 'pull') {
       updateMapLayer(editdb, editlayer);
+    	document.getElementById('editbutton').disabled = false;
     }
 	}).on('paused', function () {
 		sendMessage("Replication paused");
@@ -79,15 +80,14 @@ function loadEditableLayer(bbox) {
 
 // get all data layers from Cloudant
 function loadData() {
-	document.getElementById('editbutton').disabled = false;
-	// TODO: improvement, move this into a webworker
+	// get editable layer
+	loadEditableLayer(bbox);
 
 	var bbox = map.getBounds().toBBoxString();
 	for (var i = 0; i < remotedbs.length; i++) {
 		loadLayer(i, bbox);
 	}
-	// get editable layer
-	loadEditableLayer(bbox);
+  addOverlaysControl();
 } // end function loadData
 
 function buildQueryObject(layerconfig, bbox) {
