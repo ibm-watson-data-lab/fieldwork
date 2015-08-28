@@ -2,6 +2,8 @@
 
 The Cloudant Field Work is a demo web application that allows for offline field editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an [IBM Cloudant](https://cloudant.com/) database.
 
+**NOTE: This project has been forked to be deployed on IBM Bluemix and now lives at [https://github.com/ibm-cds-labs/fieldwork](https://github.com/ibm-cds-labs/fieldwork)**
+
 ## Installing
 
 Get the project:
