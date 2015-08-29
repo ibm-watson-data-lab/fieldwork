@@ -1,13 +1,17 @@
-# Cloudant Field Work
+# Field Work
 
-The Cloudant Field Work is a demo web application that allows for offline field editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an [IBM Cloudant](https://cloudant.com/) database.
+## Motivation
 
-## Installing
+Field Work is a web application that supports offline editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo or Lucene Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an [IBM Cloudant](https://cloudant.com/) database.
 
-Get the project:
+Many field-based industries whose personnel are disconnected from communications networks -- often in remote areas or even underground -- can benefit from this kind of offline-first mobile application.  This demonstration is designed for utilities repair personnel who need to capture events in work orders. 
 
-    $ git clone https://github.com/rajrsingh/fieldwork.git
-    $ cd fieldwork
+## Usage
+
+1. This demo has data from the City of Boston. Pan to an area of interest (the initial area you see is fine) and click on the "Load Data" button to start syncing with the Cloudant database. 
+1. A "Layers" menu will appear in the top right corner of the map. Click on check boxes next to the data layers to toggle their visibility. 
+1. Pushpins will also appear on top of the map. These are the items that can be edited. If you've clicked the "Load Data" button, the "Edit Pins" button will be enabled. Click that to begin editing. 3 new editing tools will appear below the "+" and "-" map controls
+1. 
 
 ## Deploying
 

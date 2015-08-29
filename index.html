@@ -3,49 +3,65 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>Field Data Editing Demo</title>
+		<title>Field Work | IBM CDS</title>
     <link href="//cloudant.com/wp-content/themes/cloudant/images/favicon.ico" rel='shortcut icon' type='image/vnd.microsoft.icon' />
     <link href="//cloudant.com/wp-content/themes/cloudant/images/favicon.png" rel='icon' type='image/png' />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
-		<link rel="stylesheet" href="css/style.css" type="text/css" />
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' />
     <link rel="stylesheet" href="css/leaflet.draw.css" type="text/css">
+		<link rel="stylesheet" href="css/main.css" type="text/css" />
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
 	</head>
 	<body>
-		<div class="container-fluid appwindow">
-			<div id="banner">
-					<h3><img src="css/images/cloudant_ibm.png" height="48px">
-					Field Work<!-- :: field editing demonstration -->
-					<div id="controls" style="float:right">
- 						<button id="loadbutton" class="btn btn-success"
-							onclick="loadData()">Load</button>
-						<button id="editbutton" class="btn btn-success"
-							onclick="editFeatures()" disabled>Edit</button>
-					</div></h3>
-			</div><!-- end banner-->
-			<div id="map"></div>
-		</div>
-    <p> </p>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="panel panel-warning">
-          <div class="panel-heading">
-            <h3 class="panel-title">Message Activity</h3>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+      <div class="row">
+        <div class="navbar-header col-sm-6">
+          <span class="navbar-brand">
+            <a rel="home" href="https://developer.ibm.com/clouddataservices" target="_new">
+            <span><span class="ibm">IBM</span> Cloud Data Services <span class="dev">dev</span></span>
+            </a>
+        </div>
+      </div>
+      </div>
+    </nav>
+    
+    <div class="page-content container-fluid">
+      <div class="row">
+
+        <div class="col-sm-3 sidebar">
+          <div class="sidebar-title">
+            <p>Field Work</p>
+            <div class="toolbar">
+  					    <div id="controls">
+   						    <button id="loadbutton" class="btn btn-warning" onclick="loadData()">Load Data</button>
+                  <button id="editbutton" class="btn btn-warning" onclick="editFeatures()" disabled>Edit Pins</button>
+  					    </div>
+  			    </div><!-- end toolbar-->
           </div>
-          <div class="panel-body" id="messages" style="height:128px;overflow:scroll;background-color:#666"></div>
+
+        			<h2>About</h2>
+              <p class="small">Field Work is a web application that supports offline editing and mapping of geospatial data using Cloudant Geo or Lucene Geo query. It also supports map editing, and <a href="https://cloudant.com/product/cloudant-features/sync/" target="_blank">syncs</a> locally edited data back to an <a href="https://cloudant.com/" target="_blank">IBM Cloudant</a> database.</p>
+              <p class="small">Many field-based industries whose personnel are disconnected from communications networks -- often in remote areas or even underground -- can benefit from this kind of offline-first mobile application.</p>
+              
+              <h2>Usage</h2>
+              <ol>
+                <li class="small">Pan to an area of interest by "dragging the map" (the initial area you see is fine) and click on the "Load Data" button to start syncing with the Cloudant database. </li>
+                <li class="small">A "Layers" menu will appear in the top right corner of the map. Click on check boxes next to the data layers to toggle their visibility. </li>
+                <li class="small">Pushpins will also appear on top of the map. These are the items that can be edited. If you've clicked the "Load Data" button, the "Edit Pins" button will be enabled. Click that to begin editing. 3 new editing tools will appear below the "+" and "-" map controls</li>
+              </ol>
+        </div><!-- end sidebar -->
+          
+        <div class="col-sm-9 col-sm-offset-3 appwindow">
+			    <div id="map"></div>
+          <div class="panel-body small" id="messages" style="height:128px;overflow:scroll;background-color:#666"></div>
         </div>      
-      </div><!-- end column -->
+        </div><!-- end appwindow -->
+    
     </div><!-- end row -->
-		<div class="bb-alert alert alert-info" style="display:none;">
-			<span>The examples populate this alert with dummy content</span>
-		</div>
-					<!-- <div id="admincontrols">
-						<button id="syncbutton" class="btn btn-warning"
-							onclick="syncFeatures()">Sync</button>
-						<button id="resetbutton" class="btn btn-warning"
-							onclick="resetdbs()">Reset Data</button>
-					</div> -->
+    </div><!-- end page-content -->
+
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootbox.min.js"></script>

@@ -62,6 +62,7 @@ function loadEditableLayer(bbox) {
     if ( info.direction == 'pull') {
       updateMapLayer(editdb, editlayer);
     	document.getElementById('editbutton').disabled = false;
+      document.getElementById('loadbutton').disabled = true;
     }
 	}).on('paused', function () {
 		sendMessage("Replication paused");
