@@ -1,9 +1,17 @@
+---
+declared-services: 
+  cloudant-fieldwork-db:
+    label: cloudantNoSQLDB
+    plan: Shared
 applications:
-- disk_quota: 512M
-  buildpack: php_buildpack
+- name: fieldwork
   host: fieldwork
-  name: fieldwork
+  memory: 128M
+  disk_quota: 512M
+  buildpack: php_buildpack
   path: .
   domain: mybluemix.net
   instances: 1
-  memory: 128M
+  random-route: true
+  services:
+  - cloudant-fieldwork-db
