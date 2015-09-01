@@ -16,22 +16,64 @@ Many field-based industries whose personnel are disconnected from communications
 
 ## Architecture
 
+![field work architecture](./fieldwork-app-graphics.png)
+
+This an architectural overview of the components that make this app run.
 
 
 ## Running the app on Bluemix
 
+1. Create a Bluemix Account
 
-Complete these steps first if you have not already:
+    [Sign up][bluemix_signup_url] for Bluemix, or use an existing account.
 
-1. [Install couchapp](https://github.com/couchapp/couchapp)
-1. Copy the app to your Cloudant account
+2. Download and install the [Cloud-foundry CLI][cloud_foundry_url] tool
 
-        $ couchapp push . http://$username.cloudant.com/fieldwork
+3. Clone the app to your local environment from your terminal using the following command
 
+  ```
+  git clone https://github.com/IBM-Bluemix/box-watson.git
+  ```
 
-1. Or (if you have security turned on)
+4. cd into this newly created directory
 
-        $ couchapp push . http://$username:$password@$username.cloudant.com/fieldwork
+5. Edit the `manifest.yml` file and change the `<application-name>` and `<application-host>` to something unique.
+
+  ```
+  applications:
+    name: fieldwork-me
+    host: fieldwork-me
+    runtime: php_buildpack
+    memory: 128M
+    instances: 1
+  ```
+  The host you use will determinate your application url initially, e.g. `<application-host>.mybluemix.net`.
+
+6. Connect to Bluemix in the command line tool and follow the prompts to log in.
+
+  ```
+  $ cf api https://api.ng.bluemix.net
+  $ cf login
+  ```
+
+7. Create the Cloudant service in Bluemix.
+
+  ```
+  $ cf create-service cloudant
+  ```
+  
+1. Create a Cloudant database indexed for geospatial query
+
+  ```
+  curl to create design doc
+  ```
+
+8. Push it to Bluemix.
+
+  ```
+  $ cf push
+  ```
+
 
 ## Privacy notice
 The 'Field Work' sample web application includes code to track deployments to Bluemix and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/cloudant-labs/deployment-tracker) service on each deployment:
