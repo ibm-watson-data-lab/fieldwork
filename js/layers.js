@@ -1,3 +1,5 @@
+var FIRST_LOAD = true;
+
 /** Add PouchDB docs to Leaflet map */
 function updateMapLayer(pdb, maplayer) {
 	pdb.allDocs( {include_docs: true} ).then(function (result) {
@@ -66,6 +68,12 @@ function loadEditableLayer(bbox) {
     }
 	}).on('paused', function () {
 		sendMessage("Replication paused");
+    if ( FIRST_LOAD ) {
+      updateMapLayer(editdb, editlayer);
+    	document.getElementById('editbutton').disabled = false;
+      document.getElementById('loadbutton').disabled = true;
+      FIRST_LOAD = false;
+    }
 	}).on('active', function () {
 		sendMessage("Active Replication...");
 	}).on('complete', function (info) {
@@ -81,10 +89,11 @@ function loadEditableLayer(bbox) {
 
 // get all data layers from Cloudant
 function loadData() {
+	var bbox = map.getBounds().toBBoxString();
+
 	// get editable layer
 	loadEditableLayer(bbox);
 
-	var bbox = map.getBounds().toBBoxString();
 	for (var i = 0; i < remotedbs.length; i++) {
 		loadLayer(i, bbox);
 	}
