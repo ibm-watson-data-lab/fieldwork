@@ -1,7 +1,0 @@
-{
-	"env": {
-		"remote": {
-			"db": "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/fieldwork"
-		}
-	}
-}
