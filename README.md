@@ -25,9 +25,9 @@ This an architectural overview of the components that make this app run.
 
 1. Create a Bluemix Account
 
-    [Sign up][https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd] for Bluemix, or use an existing account.
+    ![Sign up](https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd) for Bluemix, or use an existing account.
 
-2. Download and install the [Cloud-foundry CLI][https://github.com/cloudfoundry/cli] tool
+2. Download and install the ![Cloud-foundry CLI](https://github.com/cloudfoundry/cli) tool
 
 3. Clone the app to your local environment from your terminal using the following command
 
