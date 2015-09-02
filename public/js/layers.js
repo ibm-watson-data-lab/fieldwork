@@ -51,13 +51,13 @@ function loadFromCloudantQuery(queryobj, pdb, maplayer) {
 /* get a single base data layer from Cloudant identified by the array index 
  * and put it into a PouchDB database and then onto a Leaflet GeoJSON layer on the map */
 function loadLayer(idx, bbox) {
-	remotedbs[idx] = new PouchDB(config.geodata[idx].name);
-	var queryobj = buildQueryObject(config.geodata[idx], bbox);
+	remotedbs[idx] = new PouchDB(mapconfig.geodata[idx].name);
+	var queryobj = buildQueryObject(mapconfig.geodata[idx], bbox);
 	loadFromCloudantQuery(queryobj, remotedbs[idx], maplayers[idx]);
 }
 
 function loadEditableLayer(bbox) {
-	editdb = new PouchDB(config.editlayer.name);
+	editdb = new PouchDB(mapconfig.editlayer.name);
   var sync = editdb.sync(remoteeditdb, {live:true,retry:true})
 	.on('change', function (info) {
     sendMessage(['CHANGE', info]);
@@ -83,7 +83,7 @@ function loadEditableLayer(bbox) {
 	}).on('error', function (err) {
     sendMessage(['ERROR', err]);
 	});
-  // var queryobj = buildQueryObject(config.editlayer, bbox);
+  // var queryobj = buildQueryObject(mapconfig.editlayer, bbox);
   // loadFromCloudantQuery(queryobj, editdb, editlayer);
 }
 

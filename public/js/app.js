@@ -1,23 +1,27 @@
 //-- initialize map
-// var map = L.map('map').setView([44.5499, -123.254], 16);
 var map = L.map('map').setView([42.35, -71.05], 16); // Boston
-// var map = L.map('map').setView([41.8052853,-71.4055789], 16); // Providence
 
-// L.tileLayer('//{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-//   maxZoom: 20,
-//   detectRetina: true,
-//   id: 'examples.map-20v6611k'
-// }).addTo(map);
 L.mapbox.accessToken = 'pk.eyJ1IjoicmFqcnNpbmdoIiwiYSI6ImpzeDhXbk0ifQ.VeSXCxcobmgfLgJAnsK3nw';
 L.mapbox.tileLayer('mapbox.pencil').addTo(map);
 
 L.control.scale().addTo(map);
 
+//-- get map configuration settings
+var mapconfig = null;
+$.ajax({
+  url: '/mapconfig',
+  async: false,
+  dataType: 'json',
+  success: function (response) {
+    mapconfig = response;
+  }
+});
+
 //-- initialize databases
-var remotedbs = new Array(config.geodata.length);
+var remotedbs = new Array(mapconfig.geodata.length);
 var editdb = null;
-var remoteeditdb = new PouchDB('https://'+config.editlayer.key+':'+config.editlayer.password+'@rajsingh.cloudant.com/' + config.editlayer.name);
-var maplayers = new Array(config.geodata.length+1);
+var remoteeditdb = new PouchDB('https://'+mapconfig.editlayer.key+':'+mapconfig.editlayer.password+'@rajsingh.cloudant.com/' + mapconfig.editlayer.name);
+var maplayers = new Array(mapconfig.geodata.length+1);
 
 var annoMarker = L.Icon.extend({
     options: {
@@ -29,17 +33,17 @@ var annoMarker = L.Icon.extend({
 });
 
 //-- database init
-// for (var i = 0; i < config.geodata.length; i++) {
-// 	remotedbs[i] = new PouchDB(config.geodata[i].name);
+// for (var i = 0; i < mapconfig.geodata.length; i++) {
+// 	remotedbs[i] = new PouchDB(mapconfig.geodata[i].name);
 // 	remotedbs[i].destroy().then(function () {
-// 		remotedbs[i] = new PouchDB(config.geodata[i].name);
+// 		remotedbs[i] = new PouchDB(mapconfig.geodata[i].name);
 // 	});
 // }
 
 //-- map layers setup
 var st = {radius: 12, fillColor: '#6157B9', fillOpacity: 0.2, color: '#6157B9'};
-for (var i = 0; i < config.geodata.length; i++) {
-	var dataset = config.geodata[i];
+for (var i = 0; i < mapconfig.geodata.length; i++) {
+	var dataset = mapconfig.geodata[i];
 	if (dataset.type === 'Point') {
 		maplayers[i] = L.geoJson(null, {
 			onEachFeature: onEachFeature, 
@@ -49,7 +53,7 @@ for (var i = 0; i < config.geodata.length; i++) {
 	} else {
 		maplayers[i] = L.geoJson(null, {
 			onEachFeature: onEachFeature, 
-			style: config.geodata[i].style
+			style: mapconfig.geodata[i].style
 		});//.addTo(map);
 	}
 }
@@ -57,8 +61,8 @@ for (var i = 0; i < config.geodata.length; i++) {
 //-- layer control setup
 function addOverlaysControl() {
   var overlayMaps = {};
-  for (var i = 0; i < config.geodata.length; i++) {
-  	overlayMaps[config.geodata[i].name] = maplayers[i];
+  for (var i = 0; i < mapconfig.geodata.length; i++) {
+  	overlayMaps[mapconfig.geodata[i].name] = maplayers[i];
   }
   L.control.layers(null, overlayMaps, {collapsed:false,autoZIndex:true}).addTo(map);
 }

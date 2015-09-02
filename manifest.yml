@@ -5,13 +5,11 @@ declared-services:
     plan: Shared
 applications:
 - name: fieldwork
-  host: fieldwork
+  host: fieldwork-${random-word}
   memory: 128M
   disk_quota: 512M
-  buildpack: php_buildpack
   path: .
   domain: mybluemix.net
   instances: 1
-  random-route: true
   services:
   - cloudant-fieldwork-db

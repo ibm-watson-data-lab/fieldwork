@@ -4,7 +4,7 @@
   "description": "A web application that supports offline editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo or Lucene Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an IBM Cloudant database",
   "main": "app.js",
   "scripts": {
-    "postinstall": "./admin.js track && ./admin.js db put && ./admin.js ddoc put",
+    "install": "./admin.js track && ./admin.js db put && ./admin.js ddoc put",
     "start": "node app.js",
     "test": "echo no tests yet"
   },

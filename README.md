@@ -21,31 +21,40 @@ Many field-based industries whose personnel are disconnected from communications
 This an architectural overview of the components that make this app run.
 
 
-## Running the app on Bluemix
+## Deploying the app on Bluemix manually
 
 1. Create a Bluemix Account
 
-    [Sign up][bluemix_signup_url] for Bluemix, or use an existing account.
+    [Sign up][https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd] for Bluemix, or use an existing account.
 
-2. Download and install the [Cloud-foundry CLI][cloud_foundry_url] tool
+2. Download and install the [Cloud-foundry CLI][https://github.com/cloudfoundry/cli] tool
 
 3. Clone the app to your local environment from your terminal using the following command
 
   ```
-  git clone https://github.com/IBM-Bluemix/box-watson.git
+  git clone https://github.com/ibm-cds-labs/fieldwork
   ```
 
 4. cd into this newly created directory
 
-5. Edit the `manifest.yml` file and change the `<application-name>` and `<application-host>` to something unique.
+5. Edit the `manifest.yml` file and change the `<application-host>` to something unique.
 
   ```
+  ---
+  declared-services: 
+    cloudant-fieldwork-db:
+      label: cloudantNoSQLDB
+      plan: Shared
   applications:
-    name: fieldwork-me
-    host: fieldwork-me
-    runtime: php_buildpack
-    memory: 128M
-    instances: 1
+    - name: fieldwork
+      host: fieldwork-gr8one
+      memory: 128M
+      disk_quota: 512M
+      path: .
+      domain: mybluemix.net
+      instances: 1
+      services:
+      - cloudant-fieldwork-db
   ```
   The host you use will determinate your application url initially, e.g. `<application-host>.mybluemix.net`.
 
@@ -59,15 +68,9 @@ This an architectural overview of the components that make this app run.
 7. Create the Cloudant service in Bluemix.
 
   ```
-  $ cf create-service cloudant
+  $ cf create-service cloudant-fieldwork-db
   ```
   
-1. Create a Cloudant database indexed for geospatial query
-
-  ```
-  curl to create design doc
-  ```
-
 8. Push it to Bluemix.
 
   ```
@@ -87,7 +90,7 @@ This data is collected from the VCAP_APPLICATION environment variable in IBM Blu
 
 ## Disabling Deployment Tracking
 
-Deployment tracking can be disabled by removing `require("cf-deployment-tracker-client").track();` from the beginning of the `app.js` main server file.
+Deployment tracking can be disabled by removing `./admin.js track && ` from the `install` line of the `scripts` sections within `package.json`.
 
 ## License
 
