@@ -23,6 +23,11 @@ This an architectural overview of the components that make this app run.
 
 ## Deploying the app on Bluemix manually
 
+If you plan on modifying the code for this app, and want to use GitHub's code repository ([instead of IBM Bluemix DevOps Services](https://hub.jazz.net/)), follow these instructions. 
+
+1. Fork the repo
+  Click the "**Fork**" button in the top right corner of this repository
+  
 1. Create a Bluemix Account
 
     [Sign up][https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd] for Bluemix, or use an existing account.
@@ -65,13 +70,7 @@ This an architectural overview of the components that make this app run.
   $ cf login
   ```
 
-7. Create the Cloudant service in Bluemix.
-
-  ```
-  $ cf create-service cloudant-fieldwork-db
-  ```
-  
-8. Push it to Bluemix.
+7. Push to Bluemix.
 
   ```
   $ cf push
