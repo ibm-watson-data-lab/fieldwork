@@ -20,7 +20,9 @@ $.ajax({
 //-- initialize databases
 var remotedbs = new Array(mapconfig.geodata.length);
 var editdb = null;
-var remoteeditdb = new PouchDB('https://'+mapconfig.editlayer.key+':'+mapconfig.editlayer.password+'@rajsingh.cloudant.com/' + mapconfig.editlayer.name);
+var remoteediturl = 'https://'+mapconfig.editlayer.key+':'+mapconfig.editlayer.password+
+                    '@'+mapconfig.editlayer.key+'.cloudant.com/' + mapconfig.editlayer.name;
+var remoteeditdb = new PouchDB(remoteediturl);
 var maplayers = new Array(mapconfig.geodata.length+1);
 
 var annoMarker = L.Icon.extend({
