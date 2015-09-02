@@ -4,7 +4,7 @@ Field Work is a web application that supports offline editing and mapping of geo
 
 Many field-based industries whose personnel are disconnected from communications networks -- often in remote areas or even underground -- can benefit from this kind of offline-first mobile application.  This demonstration is designed for utilities repair personnel who need to capture events in work orders. 
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/ibm-cds-labs/fieldwork)
 
 
 ## How it Works
@@ -30,9 +30,9 @@ If you plan on modifying the code for this app, and want to use GitHub's code re
   
 1. Create a Bluemix Account
 
-    [Sign up][https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd] for Bluemix, or use an existing account.
+    ![Sign up](https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd) for Bluemix, or use an existing account.
 
-2. Download and install the [Cloud-foundry CLI][https://github.com/cloudfoundry/cli] tool
+2. Download and install the ![Cloud-foundry CLI](https://github.com/cloudfoundry/cli) tool
 
 3. Clone the app to your local environment from your terminal using the following command
 
