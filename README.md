@@ -81,13 +81,6 @@ If you plan on modifying the code for this app, and want to use GitHub's code re
   $ cf push
   ```
 
-  Now bind the service to your app.
-
-  ```
-  $ cf bind-service fieldwork cloudant-fieldwork-db
-  ```
-
-
 ## Privacy notice
 The 'Field Work' sample web application includes code to track deployments to Bluemix and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/cloudant-labs/deployment-tracker) service on each deployment:
 
