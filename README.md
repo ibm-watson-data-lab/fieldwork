@@ -63,17 +63,28 @@ If you plan on modifying the code for this app, and want to use GitHub's code re
   ```
   The host you use will determinate your application url initially, e.g. `<application-host>.mybluemix.net`.
 
-6. Connect to Bluemix in the command line tool and follow the prompts to log in.
+1. Connect to Bluemix in the command line tool and follow the prompts to log in.
 
   ```
   $ cf api https://api.ng.bluemix.net
   $ cf login
   ```
 
-7. Push to Bluemix.
+1. Create the Cloudant service in Bluemix.
+  ```
+  $ cf create-service cloudantNoSQLDB Shared cloudant-fieldwork-db
+  ```
+  
+1. Push to Bluemix.
 
   ```
   $ cf push
+  ```
+
+  Now bind the service to your app.
+
+  ```
+  $ cf bind-service fieldwork cloudant-fieldwork-db
   ```
 
 
