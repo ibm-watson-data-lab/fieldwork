@@ -44,6 +44,16 @@ program
       console.error('No database configured');
       return;
     }
+    // set up CORS for web app access
+    fieldworkDb.set_cors({ 
+      enable_cors: true, 
+      allow_credentials: true, 
+      origins: [ "http://mybluemix.net","https://mybluemix.net"]
+    }, 
+    function(err, data) {
+      console.log(err, data);
+    });
+    
     switch (method) {
       case 'put':
         fieldworkDb.db.create('fieldedits', function(err, body) {
