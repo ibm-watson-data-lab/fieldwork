@@ -68,7 +68,9 @@ function loadEditableLayer(bbox) {
     }
 	}).on('paused', function () {
 		sendMessage("Replication paused");
+    console.log('Checking for FIRST_LOAD');
     if ( FIRST_LOAD ) {
+      console.log('FIRST_LOAD FIRST_LOAD FIRST_LOAD');
       updateMapLayer(editdb, editlayer);
     	document.getElementById('editbutton').disabled = false;
       document.getElementById('loadbutton').disabled = true;

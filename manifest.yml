@@ -5,7 +5,7 @@ declared-services:
     plan: Shared
 applications:
 - name: fieldwork
-  host: fieldwork-${random-word}
+  host: fieldwork
   memory: 128M
   disk_quota: 512M
   path: .

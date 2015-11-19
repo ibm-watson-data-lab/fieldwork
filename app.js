@@ -53,7 +53,7 @@ app.get('/mapconfig', function (req, res) {
   if (vcapServices && vcapServices.cloudantNoSQLDB && vcapServices.cloudantNoSQLDB.length > 0) {
       var service = vcapServices.cloudantNoSQLDB[0];
       if (service.credentials) {
-        editlayer.account = service.credentials.username + '.cloudant.com';
+        editlayer.account = service.credentials.host;
         editlayer.key = service.credentials.username;
         editlayer.password = service.credentials.password;
       }

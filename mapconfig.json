@@ -1,8 +1,5 @@
 {
   "geodata": [
-		{ "name": "hydro100k_arc", "account": "opendata.cloudant.com", 
-			"geopath": "_design/SpatialView/_geo/spatial", "type": "LineString", 
-			"style": {"width": 4, "fillOpacity": 0.6, "color": "#12109B"} },
 		{ "name": "boston_buildings", "account": "opendata.cloudant.com", 
 			"geopath": "_design/SpatialView/_geo/spatial", "type": "Polygon", 
 			"style": {"width": 1, "color": "#9B6D10"} },
