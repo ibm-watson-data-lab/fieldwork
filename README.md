@@ -25,12 +25,17 @@ This an architectural overview of the components that make this app run.
 
 The fastest way to deploy this application to Bluemix is to click the **Deploy to Bluemix** button below. If you prefer instead to deploy manually to Bluemix then read the entirety of this section.
 
-[![Deploy to Bluemix](https://deployment-tracker.mybluemix.net/stats/5995ba4616bcc1cfbc56ab72f0c152ea/badge.svg)](https://bluemix.net/deploy?repository=https://github.com/ibm-cds-labs/fieldwork)
+[![Deploy to Bluemix](https://deployment-tracker.mybluemix.net/stats/5995ba4616bcc1cfbc56ab72f0c152ea/button.svg)](https://bluemix.net/deploy?repository=https://github.com/ibm-cds-labs/fieldwork.git)
 
 **Don't have a Bluemix account?** If you haven't already, you'll be prompted to [sign up](http://www.ibm.com/cloud-computing/bluemix/) for a Bluemix account when you click the button.  Sign up, verify your email address, then return here and click the the **Deploy to Bluemix** button again. Your new credentials let you deploy to the platform and also to code online with Bluemix and Git. If you have questions about working in Bluemix, find answers in the [Bluemix Docs](https://www.ng.bluemix.net/docs/).
 
+### Optional steps
 
-If you plan on modifying the code for this app, and want to use GitHub's code repository ([instead of IBM Bluemix DevOps Services](https://hub.jazz.net/)), follow these instructions. 
+1. The above procedure will create a random URL for your app on every deployment. This had to be done to avoid everyone deploying the sample app from trying to use the same URL. To fix a static URL for your app, go into the [IBM Bluemix DevOps Services](https://hub.jazz.net/) project created for you in the automatic deployment process above, and:
+  1. Click the "Edit Code" button and modify `manifest.yml` 
+  2. Change the line `random-route: true` to `host: my-unique-app-name`
+  3. On the next deployment, the URL for your app will now be `my-unique-app-name.mybluemix.net`
+2. If you plan on modifying the code for this app, and want to use GitHub's code repository ([instead of IBM Bluemix DevOps Services](https://hub.jazz.net/)), follow the instructions below. 
 
 ### Manual development
 
