@@ -1,18 +1,18 @@
-# Overview
+# Field Work
 
 Field Work is a web application that supports offline editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo or Lucene Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an [IBM Cloudant](https://cloudant.com/) database.
 
 Many field-based industries whose personnel are disconnected from communications networks -- often in remote areas or even underground -- can benefit from this kind of offline-first mobile application.  This demonstration is designed for utilities repair personnel who need to capture events in work orders. 
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/ibm-cds-labs/fieldwork)
+![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/5995ba4616bcc1cfbc56ab72f0c152ea/badge.svg)
 
 
-## How it Works
+## Usage
 
 1. This demo has data from the City of Boston. Pan to an area of interest (the initial area you see is fine) and click on the "Load Data" button to start syncing with the Cloudant database. 
 1. A "Layers" menu will appear in the top right corner of the map. Click on check boxes next to the data layers to toggle their visibility. 
-1. Pushpins will also appear on top of the map. These are the items that can be edited. If you've clicked the "Load Data" button, the "Edit Pins" button will be enabled. Click that to begin editing. 3 new editing tools will appear below the "+" and "-" map controls
-1. Hover over those editing controls for prompts on adding, deleting and modifying  pushpins.
+1. Pushpins will also appear on top of the map. These are the items that can be edited. If you've clicked the "Load Data" button, the "Edit Pins" button will be enabled. Click that to begin editing. 
+1. Three new editing tools will appear below the "+" and "-" map controls. Hover over those editing controls for prompts on adding, deleting and modifying  pushpins.
 
 ## Architecture
 
@@ -21,18 +21,27 @@ Many field-based industries whose personnel are disconnected from communications
 This an architectural overview of the components that make this app run.
 
 
-## Deploying the app on Bluemix manually
+## Deploying to IBM Bluemix
+
+The fastest way to deploy this application to Bluemix is to click the **Deploy to Bluemix** button below. If you prefer instead to deploy manually to Bluemix then read the entirety of this section.
+
+[![Deploy to Bluemix](https://deployment-tracker.mybluemix.net/stats/5995ba4616bcc1cfbc56ab72f0c152ea/badge.svg)](https://bluemix.net/deploy?repository=https://github.com/ibm-cds-labs/fieldwork)
+
+**Don't have a Bluemix account?** If you haven't already, you'll be prompted to [sign up](http://www.ibm.com/cloud-computing/bluemix/) for a Bluemix account when you click the button.  Sign up, verify your email address, then return here and click the the **Deploy to Bluemix** button again. Your new credentials let you deploy to the platform and also to code online with Bluemix and Git. If you have questions about working in Bluemix, find answers in the [Bluemix Docs](https://www.ng.bluemix.net/docs/).
+
 
 If you plan on modifying the code for this app, and want to use GitHub's code repository ([instead of IBM Bluemix DevOps Services](https://hub.jazz.net/)), follow these instructions. 
+
+### Manual development
 
 1. Fork the repo
   Click the "**Fork**" button in the top right corner of this repository
   
 1. Create a Bluemix Account
 
-    ![Sign up](https://console.ng.bluemix.net/?cm_mmc=Display-GitHubReadMe-_-BluemixSampleApp-Fieldwork-_-Node-_-CDS-DevAd) for Bluemix, or use an existing account.
+    ![Sign up](http://www.ibm.com/cloud-computing/bluemix/) for Bluemix, or use an existing account.
 
-2. Download and install the ![Cloud-foundry CLI](https://github.com/cloudfoundry/cli) tool
+2. Download and install the ![Cloud-foundry CLI](https://www.ng.bluemix.net/docs/#starters/install_cli.html) tool
 
 3. Clone the app to your local environment from your terminal using the following command
 
@@ -75,7 +84,9 @@ If you plan on modifying the code for this app, and want to use GitHub's code re
   $ cf create-service cloudantNoSQLDB Shared cloudant-fieldwork-db
   ```
   
-1. Push to Bluemix.
+### Manual deployment
+
+To deploy to Bluemix, simply:
 
   ```
   $ cf push
