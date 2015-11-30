@@ -1,3 +1,6 @@
+// Show Help message
+$('#helpmodal').modal('show')
+
 //-- initialize map
 var map = L.map('map').setView([42.35, -71.05], 16); // Boston
 
