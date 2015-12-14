@@ -2,7 +2,13 @@
 
 Field Work is a web application that supports offline editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo or Lucene Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an [IBM Cloudant](https://cloudant.com/) database.
 
+<<<<<<< HEAD
 Many field-based industries whose personnel are disconnected from communications networks -- often in remote areas or even underground -- can benefit from this kind of offline-first mobile application.  This demonstration is designed for utilities repair personnel who need to capture events in work orders. 
+=======
+**NOTE: This project has been forked to be deployed on IBM Bluemix and now lives at [https://github.com/ibm-cds-labs/fieldwork](https://github.com/ibm-cds-labs/fieldwork)**
+
+## Installing
+>>>>>>> rajrsingh/master
 
 ![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/5995ba4616bcc1cfbc56ab72f0c152ea/badge.svg)
 

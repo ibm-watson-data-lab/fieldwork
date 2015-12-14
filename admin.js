@@ -48,7 +48,8 @@ program
     fieldworkDb.set_cors({ 
       enable_cors: true, 
       allow_credentials: true, 
-      origins: [ "http://mybluemix.net","https://mybluemix.net"]
+      // origins: [ "http://*.mybluemix.net","https://*.mybluemix.net"]
+      origins: [ "*"]
     }, 
     function(err, data) {
       console.log(err, data);
