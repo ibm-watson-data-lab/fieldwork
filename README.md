@@ -4,6 +4,11 @@ Field Work is a web application that supports offline editing and mapping of geo
 
 Many field-based industries whose personnel are disconnected from communications networks -- often in remote areas or even underground -- can benefit from this kind of offline-first mobile application.  This demonstration is designed for utilities repair personnel who need to capture events in work orders.
 
+## Resources
+- [Blog post: Better infrastructure maintenance with offline mobile maps](https://developer.ibm.com/clouddataservices/2016/03/07/better-infrastructure-maintenance-with-offline-mobile-maps/)
+
+- [Presentation: Field Work: Map-centric mobile apps with Cloudant Geo and LeafletJS ](http://www.slideshare.net/rajrsingh/field-work-mapcentric-mobile-apps-with-cloudant-geo-and-leafletjs)
+
 =======
 **NOTE: This project has been forked to be deployed on IBM Bluemix and now lives at [https://github.com/ibm-cds-labs/fieldwork](https://github.com/ibm-cds-labs/fieldwork)**
 
