@@ -43,7 +43,7 @@ function loadFromCloudantQuery(queryobj, pdb, maplayer) {
 		}
 	})
 	.fail(function(jqxhr, textStatus, error) {
-		sendMessage('query failed: '+error.toString());//+'Trying to load map layer from PouchDB cache...');
+		sendMessage('loadFromCloudantQuery query failed: '+error.toString());//+'Trying to load map layer from PouchDB cache...');
 		// updateMapLayer(pdb, maplayer);
 	});	
 }
@@ -107,7 +107,8 @@ function buildQueryObject(layerconfig, bbox) {
 	// if (layerconfig.key) q += layerconfig.key + ':' + layerconfig.password + '@';
 	q += layerconfig.account + '/' + layerconfig.name + '/' + layerconfig.geopath;
 	q += '?include_docs=true&limit=200&bbox=' + bbox;
-	var qo = { url: q, contentType: 'application/json' };
+  // the contentType header was causing a failure due to a 'preflight' request being generated
+  var qo = { url: q};//, contentType: 'application/json' };
 	if (layerconfig.key && layerconfig.password) {
 		qo.username = layerconfig.key;
 		qo.password = layerconfig.password;
