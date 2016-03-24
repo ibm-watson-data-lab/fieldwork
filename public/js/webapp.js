@@ -115,6 +115,11 @@ function editFeatures() {
 			rectangle: false
 		}
 	});
+  L.drawLocal.draw.toolbar.buttons.marker = 'Add a pushpin.';
+  L.drawLocal.draw.handlers.marker.tooltip.start = 'Click map to place pin.';
+  L.drawLocal.edit.toolbar.buttons.edit = 'Modify a pushpin.';
+  L.drawLocal.edit.handlers.edit.tooltip.text = 'Drag a pin to change its location.';
+  L.drawLocal.edit.handlers.remove.tooltip.text = 'Click on a pin to remove.';
 	map.addControl(drawControl);	
 }
 
