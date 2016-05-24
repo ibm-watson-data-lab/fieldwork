@@ -8,6 +8,8 @@
 
 Many field-based industries whose personnel are disconnected from communications networks&#8212;often in remote areas or even underground&#8212;can benefit from this kind of offline-first mobile application.  This demonstration is designed for utilities repair personnel who need to capture events in work orders.
 
+![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/5995ba4616bcc1cfbc56ab72f0c152ea/badge.svg)
+
 ## Related Resources
 - [Blog post: Better infrastructure maintenance with offline mobile maps](https://developer.ibm.com/clouddataservices/2016/03/07/better-infrastructure-maintenance-with-offline-mobile-maps/)
 

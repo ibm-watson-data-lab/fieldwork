@@ -1,11 +1,10 @@
----
 declared-services: 
   cloudant-fieldwork-db:
     label: cloudantNoSQLDB
     plan: Shared
 applications:
 - name: fieldwork
-  random-route: true
+  random-route: false
   memory: 128M
   disk_quota: 512M
   path: .
