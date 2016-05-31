@@ -18,7 +18,7 @@ function loadFromCloudantQuery(queryobj, pdb, maplayer) {
   
 	$.ajax(queryobj)
 	.done(function (data) {
-    data = JSON.parse(data);
+    // data = JSON.parse(data);
 		if (data.rows) {
 			if (data.rows.length > 0) {
 				var gs = new Array();

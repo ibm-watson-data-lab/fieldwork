@@ -58,11 +58,13 @@ app.get('/mapconfig', function(req, res) {
             editlayer.account = service.credentials.host;
             editlayer.key = service.credentials.username;
             editlayer.password = service.credentials.password;
+            console.log("Got fieldedit credentials for " + editlayer.account + " from vcapServices");
         }
     } else {
         editlayer.account = process.env.CLOUDANT_USER + '.cloudant.com';
         editlayer.key = process.env.CLOUDANT_USER;
         editlayer.password = process.env.CLOUDANT_PASSWORD;
+        console.log("Got fieldedit credentials for " + editlayer.account + " from user environment");
     }
     mapconfig.editlayer = editlayer;
     res.send(mapconfig);
