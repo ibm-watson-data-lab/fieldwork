@@ -66,9 +66,9 @@ If you plan to modify the code for this app, and want to use GitHub's code repos
   
 1. Create a Bluemix Account
 
-    ![Sign up](http://www.ibm.com/cloud-computing/bluemix/) for Bluemix, or use an existing account.
+    [Sign up](http://www.ibm.com/cloud-computing/bluemix/) for Bluemix, or use an existing account.
 
-2. Download and install the ![Cloud-foundry CLI](https://www.ng.bluemix.net/docs/#starters/install_cli.html) tool.
+2. Download and install the [Cloud-foundry CLI](https://www.ng.bluemix.net/docs/#starters/install_cli.html) tool.
 
 3. Clone the app to your local environment from your terminal using the following command
 
