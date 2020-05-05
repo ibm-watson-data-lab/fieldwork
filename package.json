@@ -1,33 +1,45 @@
 {
-    "name": "cloudant-fieldwork",
-    "version": "1.0.0",
-    "description": "A web application that supports offline editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo or Lucene Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an IBM Cloudant database",
-    "main": "app.js",
-    "scripts": {
-        "install": "./admin.js track && ./admin.js db put && ./admin.js ddoc put",
-        "start": "node app.js",
-        "test": "echo no tests yet"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ibm-cds-labs/fieldwork.git"
-    },
-    "keywords": ["PouchDB", "Node.js", "Bootstrap", "Cloudant", "HTML5", "JavaScript", "geospatial"],
-    "author": "Raj Singh <rrsingh@us.ibm.com> (https://cloudant.com/)",
-    "license": "Apache 2.0",
-    "bugs": {
-        "url": "https://github.com/ibm-cds-labs/fieldwork/issues"
-    },
-    "homepage": "https://github.com/ibm-cds-labs/fieldwork",
-    "dependencies": {
-        "body-parser": "^1.11.0",
-        "cf-deployment-tracker-client": "^0.x",
-        "cloudant": "^1.0.0-beta3",
-        "commander": "^2.6.0",
-        "cookie-parser": "^1.3.4",
-        "compression": "^1.6.2",
-        "dotenv": "^0.5.1",
-        "express": "^4.11.1",
-        "http-post": "^0.1.1"
-    }
+  "name": "cloudant-fieldwork",
+  "version": "1.0.0",
+  "description": "A web application that supports offline editing and mapping of geospatial data. It downloads and saves geospatial data locally for offline use using Cloudant Geo or Lucene Geo query, has a UI that supports editing of points, lines and polygons, and syncs locally edited data back to an IBM Cloudant database",
+  "main": "app.js",
+  "scripts": {
+    "install": "./admin.js track && ./admin.js db put && ./admin.js ddoc put",
+    "start": "node app.js",
+    "test": "echo no tests yet",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibm-cds-labs/fieldwork.git"
+  },
+  "keywords": [
+    "PouchDB",
+    "Node.js",
+    "Bootstrap",
+    "Cloudant",
+    "HTML5",
+    "JavaScript",
+    "geospatial"
+  ],
+  "author": "Raj Singh <rrsingh@us.ibm.com> (https://cloudant.com/)",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/ibm-cds-labs/fieldwork/issues"
+  },
+  "homepage": "https://github.com/ibm-cds-labs/fieldwork",
+  "dependencies": {
+    "body-parser": "^1.11.0",
+    "cf-deployment-tracker-client": "^0.x",
+    "cloudant": "^1.0.0-beta3",
+    "commander": "^2.6.0",
+    "cookie-parser": "^1.3.4",
+    "compression": "^1.6.2",
+    "dotenv": "^0.5.1",
+    "express": "^4.11.1",
+    "http-post": "^0.1.1",
+    "snyk": "^1.319.0"
+  },
+  "snyk": true
 }
